@@ -210,14 +210,14 @@ function update(){
     if(word[c]==letter)
     {
         currTile.classList.add("correct");
-//         let keyTile=document.getElementById("Key"+letter);
-//         if(keyTile.classList.contains("present")){
-//         keyTile.classList.remove("present");
-//         keyTile.classList.add("correct");
-//         }
-//         else{
-//             keyTile.classList.add("correct");
-//         }
+        // let keyTile=document.getElementById("Key"+letter);
+        // if(keyTile.classList.contains("present")){
+        // keyTile.classList.remove("present");
+        // keyTile.classList.add("correct");
+        // }
+        // else{
+        //     keyTile.classList.add("correct");
+        // }
 
 
 
@@ -245,21 +245,21 @@ function update(){
         {
             currTile.classList.add("present");
 
-//             let keyTile=document.getElementById("Key"+letter);
+            // let keyTile=document.getElementById("Key"+letter);
 
-//             if(!keyTile.classList.contains("correct"))
-//             {
-//                 keyTile.classList.add("present");
-//             }
+            // if(!keyTile.classList.contains("correct"))
+            // {
+            //     keyTile.classList.add("present");
+            // }
         
 
             letterCount[letter]-=1;
         }
         else{
             currTile.classList.add("absent");
-//             let keyTile=document.getElementById("Key"+letter);
+            // let keyTile=document.getElementById("Key"+letter);
             
-//             keyTile.classList.add("absent");
+            // keyTile.classList.add("absent");
         }
     
         }
