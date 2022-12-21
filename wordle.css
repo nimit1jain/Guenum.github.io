@@ -11,15 +11,17 @@ hr{
     font-size: 36px;
     font-weight: bold;
     letter-spacing: 2px;
+    margin-block-start: auto;
+    margin-block-end: auto;
 }
 
 #answer{
-    font-size: 36px;
+    font-size: 27px;
     font-weight: bold;
 }
 
 #board{
-    width: 350px;
+    width: 295px;
     height: 420px;
     /* background-color: green; */
     display: flex;
@@ -73,6 +75,7 @@ hr{
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .key-tile{
