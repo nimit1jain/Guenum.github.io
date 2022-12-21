@@ -13,10 +13,21 @@ var guessList = ["aahed", "aalii", "aargh", "aarti", "abaca", "abaci", "abacs", 
 
 guessList = guessList.concat(wordList);
 
-var word = wordList[Math.floor(Math.random()*wordList.length)].toUpperCase();
+// var word = wordList[Math.floor(Math.random()*wordList.length)].toUpperCase();
 
+var word=Math.floor(10000 + Math.random() * 90000).toString();
+
+
+// var rannum=Math.floor(Math.random()*100000);
+// while(rannum<100000||rannum>99999)
+// {
+    
+// var rannum=Math.floor(Math.random()*100000);
+// console.log(rannum);
+// }
+// rannum=rannum.toString();
+// var word=rannum;
 console.log(word);
-
 
 
 window.onload=function(){
@@ -37,10 +48,14 @@ function initialize(){
         }
     }
 
-    let keyboard=[
-        ["Q","W","E","R","T","Y","U","I","O","P"],
-        ["A","S","D","F","G","H","J","K","L"],
-        ["Enter","Z","X","C","V","B","N","M","⌫"]]
+    // let keyboard=[
+    //     ["Q","W","E","R","T","Y","U","I","O","P"],
+    //     ["A","S","D","F","G","H","J","K","L"],
+    //     ["Enter","Z","X","C","V","B","N","M","⌫"]]
+
+    let keyboard=[["0","1","2"],
+["3","4","5"],
+["6","7","8"],["Enter","9","⌫"]]
 
 for(let i=0;i<keyboard.length;i++)
 {
@@ -61,7 +76,9 @@ for(let i=0;i<keyboard.length;i++)
         {
             keyTile.id="Backspace";
         }
-        else if(key>="A"&&key<="Z")
+
+
+        else if(key>="0"&&key<="9")    // change to key>="A"&&key<="Z"  
         {
             keyTile.id="Key"+key;
         }
@@ -83,6 +100,7 @@ for(let i=0;i<keyboard.length;i++)
 
 
     document.addEventListener("keyup",(e)=>{
+        // console.log(e.code);
         processInput(e);
     })
 
@@ -100,19 +118,29 @@ function processInput(e){
         document.getElementById("answer").innerText="You Have guessed right!";
         return;
     }
-    if("KeyA"<=e.code&&e.code<="KeyZ")
+    // console.log(e.code);
+    let str=e.code;
+    str=str.replace("Numpad","Key");
+    str=str.replace("Digit","Key");
+    // e.code=console.log(e.code.replace("Digit","Key"));
+   
+    
+
+    if(str>="Key0"&&str<="Key9")   // change to e.code>="Key0"&&e.code<="Key9"  (e.code>="Numpad0"&&e.code<="Numpad9")||(e.code>="Digit0"&&e.code<="Digit9")
     {
-        if(col<width)
+        if(col<width)      
         {
             let currTile=document.getElementById(row.toString()+'-'+col.toString());
             if(currTile.innerText == "")
             {
-                currTile.innerText=e.code[3];
+                currTile.innerText=str[3];
+                
+
                 col+=1;
             }
         }
     }
-    else if(e.code=="Backspace")
+    else if(str=="Backspace")
     {
         if(col>0&&col<=width)
         {
@@ -122,7 +150,7 @@ function processInput(e){
         let currTile=document.getElementById(row.toString()+'-'+col.toString());
         currTile.innerText="";
     }
-    else if(e.code=="Enter")
+    else if(str=="Enter")
     {
         update();
         
@@ -133,6 +161,9 @@ function processInput(e){
         document.getElementById("answer").innerText="Correct Word is "+word;
     }
 }
+
+
+// you will have to apply check for column 0
 
 function update(){
 
@@ -145,13 +176,13 @@ function update(){
         let letter=currTile.innerText;
         guess+=letter;
     }
-    guess=guess.toLowerCase();
+    // guess=guess.toLowerCase();
 
-    if(!guessList.includes(guess))
-    {
-        document.getElementById("answer").innerText="Not In Word List";
-        return;
-    }
+    // if(!guessList.includes(guess))
+    // {
+    //     document.getElementById("answer").innerText="Not In Word List";
+    //     return;
+    // }
 
 
     let correct=0;
@@ -209,7 +240,8 @@ function update(){
         let letter=currTile.innerText;
         
         if(!currTile.classList.contains("correct"))
-        if(word.includes(letter)&&letterCount[letter]>0)
+        // if(word.includes(letter)&&letterCount[letter]>0)
+        if(letterCount[letter]>0)
         {
             currTile.classList.add("present");
 
