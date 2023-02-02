@@ -55,50 +55,50 @@ function initialize(){
     //     ["A","S","D","F","G","H","J","K","L"],
     //     ["Enter","Z","X","C","V","B","N","M","⌫"]]
 
-//     let keyboard=[["0","1","2"],
-// ["3","4","5"],
-// ["6","7","8"],["Enter","9","⌫"]]
+    let keyboard=[["0","1","2"],
+["3","4","5"],
+["6","7","8"],["Enter","9","⌫"]]
 
-// let key=document.getElementById("keyboard");
-// for(let i=0;i<keyboard.length;i++)
-// {
-//     let currRow=keyboard[i];
-//     let keyboardRow=document.createElement("div");
-//     keyboardRow.classList.add("keyboard-row");
+let key=document.getElementById("keyboard");
+for(let i=0;i<keyboard.length;i++)
+{
+    let currRow=keyboard[i];
+    let keyboardRow=document.createElement("div");
+    keyboardRow.classList.add("keyboard-row");
 
-//     for(let j=0;j<currRow.length;j++)
-//     {
-//         let keyTile=document.createElement("div");
-//         let key=currRow[j];
-//         keyTile.innerText=key;
-//         if(key=="Enter")
-//         {
-//             keyTile.id="Enter";
-//         }
-//         else if(key=="⌫")
-//         {
-//             keyTile.id="Backspace";
-//         }
+    for(let j=0;j<currRow.length;j++)
+    {
+        let keyTile=document.createElement("div");
+        let key=currRow[j];
+        keyTile.innerText=key;
+        if(key=="Enter")
+        {
+            keyTile.id="Enter";
+        }
+        else if(key=="⌫")
+        {
+            keyTile.id="Backspace";
+        }
 
 
-//         else if(key>="0"&&key<="9")    // change to key>="A"&&key<="Z"  
-//         {
-//             keyTile.id="Key"+key;
-//         }
+        else if(key>="0"&&key<="9")    // change to key>="A"&&key<="Z"  
+        {
+            keyTile.id="Key"+key;
+        }
 
-//         keyTile.addEventListener("click",processKey);
+        keyTile.addEventListener("click",processKey);
 
-//         if(key=="Enter")
-//         {
-//             keyTile.classList.add("enter-key-tile");
-//         }
-//         else{
-//             keyTile.classList.add("key-tile");
-//         }
-//         keyboardRow.appendChild(keyTile);
-//     }
-//     document.body.appendChild(keyboardRow);
-// }
+        if(key=="Enter")
+        {
+            keyTile.classList.add("enter-key-tile");
+        }
+        else{
+            keyTile.classList.add("key-tile");
+        }
+        keyboardRow.appendChild(keyTile);
+    }
+    document.body.appendChild(keyboardRow);
+}
 
 
 
