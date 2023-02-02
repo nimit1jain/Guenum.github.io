@@ -2,12 +2,10 @@ body{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
-    background-color: yellow;
+    /* background-color: yellow; */
+    
 }
 
-hr{
-    max-width: 500px;
-}
 
 #title{
     font-size: 36px;
@@ -32,7 +30,10 @@ hr{
     overflow: hidden;
 } */
 #board{
-    width: 531px;
+    /* width: 531px; */
+    width: 70%;
+    min-width: 300px;
+    max-width: 540px;
     height: 420px;
     /* background-color: green; */
     display: flex;
@@ -50,14 +51,15 @@ hr{
 .newd{
     display: flex;
     width: 100%;
+    
 }
 
 .tile{
     /* for box  */
     border: 2px solid lightgray;
     margin: 2.5px;
+    
     width: 10%;
-    height: 90%;
     
     /* for content  */
  
