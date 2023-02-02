@@ -1,5 +1,5 @@
 var height= 6;
-var width= 5;
+var width= 9;
  
 var row=0;
 var col=0;
@@ -15,7 +15,7 @@ guessList = guessList.concat(wordList);
 
 // var word = wordList[Math.floor(Math.random()*wordList.length)].toUpperCase();
 
-var word=Math.floor(10000 + Math.random() * 90000).toString();
+var word=Math.floor(100000000 + Math.random() * 900000000).toString();
 
 
 // var rannum=Math.floor(Math.random()*100000);
