@@ -1,6 +1,8 @@
 body{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    background-color: yellow;
 }
 
 hr{
@@ -13,6 +15,7 @@ hr{
     letter-spacing: 2px;
     margin-block-start: auto;
     margin-block-end: auto;
+    width: 100%;
 }
 
 #answer{
