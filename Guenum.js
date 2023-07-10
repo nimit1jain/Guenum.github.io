@@ -172,7 +172,7 @@ function processInput(e){
     {
         gameOver=true;
         toggle=false;
-        document.getElementById("answer").innerText="Better luck next Time! Correct Word was "+word;
+        document.getElementById("answer").innerText="Better luck next Time! Correct Number is "+word;
         document.removeEventListener("keyup",document);
         
         return;
