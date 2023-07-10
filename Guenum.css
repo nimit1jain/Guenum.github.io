@@ -19,6 +19,8 @@ body{
 #answer{
     font-size: 27px;
     font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 /* 
 #boardmodule{
