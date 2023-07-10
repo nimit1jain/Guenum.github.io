@@ -3,28 +3,12 @@ var width= 9;
  
 var row=0;
 var col=0;
+var toggle=true;
 
 var gameOver=false;
 
-// var word="SQUID";
-
-
-// guessList = guessList.concat(wordList);
-
-// var word = wordList[Math.floor(Math.random()*wordList.length)].toUpperCase();
-
 var word=Math.floor(100000000 + Math.random() * 900000000).toString();
 
-
-// var rannum=Math.floor(Math.random()*100000);
-// while(rannum<100000||rannum>99999)
-// {
-    
-// var rannum=Math.floor(Math.random()*100000);
-// console.log(rannum);
-// }
-// rannum=rannum.toString();
-// var word=rannum;
 console.log(word);
 
 
@@ -32,7 +16,7 @@ window.onload=function(){
     initialize();
 }
 
-
+// This function intialize the keyboard
 function initialize(){
     for(let r=0;r<height;r++)
     {
@@ -42,22 +26,34 @@ function initialize(){
         {
             let tile=document.createElement("div");
             tile.id=r.toString()+'-'+c.toString();
+            
             tile.classList.add("tile");
             tile.innerText="";
             newdiv.appendChild(tile);
+            
+
         }
         document.getElementById("board").appendChild(newdiv);
         
     }
 
-    // let keyboard=[
-    //     ["Q","W","E","R","T","Y","U","I","O","P"],
-    //     ["A","S","D","F","G","H","J","K","L"],
-    //     ["Enter","Z","X","C","V","B","N","M","⌫"]]
-
-    let keyboard=[["0","1","2"],
-["3","4","5"],
-["6","7","8"],["Enter","9","⌫"]]
+    for (let r = 0; r < height; r++) {
+        for (let c = 0; c < width; c++) {
+          let tileId = r.toString() + '-' + c.toString();
+          let board_key = document.getElementById(tileId);
+        
+      
+          board_key.addEventListener("click", (e) => {
+            processClick(e);
+          });
+        }
+      }
+    
+   
+let keyboard=[["0","1","2"],
+              ["3","4","5"],
+              ["6","7","8"],
+              ["Enter","9","⌫"]]
 
 let key=document.getElementById("keyboard");
 for(let i=0;i<keyboard.length;i++)
@@ -81,13 +77,12 @@ for(let i=0;i<keyboard.length;i++)
         }
 
 
-        else if(key>="0"&&key<="9")    // change to key>="A"&&key<="Z"  
+        else if(key>="0"&&key<="9")   
         {
             keyTile.id="Key"+key;
         }
 
-        keyTile.addEventListener("click",processKey);
-
+        
         if(key=="Enter")
         {
             keyTile.classList.add("enter-key-tile");
@@ -96,6 +91,7 @@ for(let i=0;i<keyboard.length;i++)
             keyTile.classList.add("key-tile");
         }
         keyboardRow.appendChild(keyTile);
+        keyTile.addEventListener("click",processKey);
     }
     document.body.appendChild(keyboardRow);
 }
@@ -106,7 +102,19 @@ for(let i=0;i<keyboard.length;i++)
         // console.log(e.code);
         processInput(e);
     })
+    
 
+
+}
+
+
+function processClick(e)
+{
+    console.log(e.target.id);
+    // let str_col=e.target.id[2];
+    // let str_row=e.target.id[0];
+    // col=str_col;
+    // row=str_row;
 
 }
 
@@ -117,19 +125,21 @@ function processKey()
 }
 
 function processInput(e){
-    if(gameOver){ 
-        document.getElementById("answer").innerText="You Have guessed right!";
-        return;
-    }
     // console.log(e.code);
     let str=e.code;
     str=str.replace("Numpad","Key");
     str=str.replace("Digit","Key");
     // e.code=console.log(e.code.replace("Digit","Key"));
-   
+    
+    if(gameOver&&toggle){ 
+        document.getElementById("answer").innerText="You Have guessed right!";
+        document.removeEventListener("keyup",document);
+ 
+        return;
+    }
     
 
-    if(str>="Key0"&&str<="Key9")   // change to e.code>="Key0"&&e.code<="Key9"  (e.code>="Numpad0"&&e.code<="Numpad9")||(e.code>="Digit0"&&e.code<="Digit9")
+    if(str>="Key0"&&str<="Key9")  
     {
         if(col<width)      
         {
@@ -153,7 +163,7 @@ function processInput(e){
         let currTile=document.getElementById(row.toString()+'-'+col.toString());
         currTile.innerText="";
     }
-    else if(str=="Enter")
+    else if(str=="Enter" && col==width&& gameOver==false)
     {
         update();
         
@@ -161,12 +171,16 @@ function processInput(e){
     if(!gameOver&&row==height)
     {
         gameOver=true;
-        document.getElementById("answer").innerText="Correct Word is "+word;
+        toggle=false;
+        document.getElementById("answer").innerText="Better luck next Time! Correct Word was "+word;
+        document.removeEventListener("keyup",document);
+        
+        return;
     }
 }
 
 
-// you will have to apply check for column 0
+
 
 function update(){
 
@@ -179,14 +193,7 @@ function update(){
         let letter=currTile.innerText;
         guess+=letter;
     }
-    // guess=guess.toLowerCase();
-
-    // if(!guessList.includes(guess))
-    // {
-    //     document.getElementById("answer").innerText="Not In Word List";
-    //     return;
-    // }
-
+   
 
     let correct=0;
     let letterCount={};
@@ -207,12 +214,12 @@ function update(){
 
 
     for(let c=0;c<width;c++){
-    let currTile=document.getElementById(row.toString()+'-'+c.toString());
-    let letter=currTile.innerText;
+        let currTile=document.getElementById(row.toString()+'-'+c.toString());
+        let letter=currTile.innerText;
     
-    if(word[c]==letter)
-    {
-        currTile.classList.add("correct");
+        if(word[c]==letter)
+        {
+            currTile.classList.add("correct");
         // let keyTile=document.getElementById("Key"+letter);
         // if(keyTile.classList.contains("present")){
         // keyTile.classList.remove("present");
@@ -225,16 +232,37 @@ function update(){
 
 
 
-        correct+=1;
-        letterCount[letter]-=1;
-    }
+            correct+=1;
+            letterCount[letter]-=1;
+        }
     
 
-    if(correct==width)
-    {
-        gameOver=true;
-        document.getElementById("answer").innerText="You Have guessed right!";
-    }
+        if(correct==width)
+        {
+            gameOver=true;
+            toggle=false;
+            if(row==0){
+                document.getElementById("answer").innerText="Clairvoyant! You Have guessed right!";
+            }
+            else if(row==1){
+                document.getElementById("answer").innerText="Genius! You Have guessed right!";
+            }
+            else if(row==2){
+                document.getElementById("answer").innerText="Mastermind! You Have guessed right!";
+            }
+            else if(row==3){
+                document.getElementById("answer").innerText="Brilliant! You Have guessed right!";
+            }
+            else if(row==4){
+                document.getElementById("answer").innerText="Excellent! You Have guessed right!";
+            }
+            else if(row==5){
+                document.getElementById("answer").innerText="Superb! You Have guessed right!";
+            }
+            
+            document.removeEventListener("keyup",document);
+            return;
+        }
 
     }
 
@@ -243,10 +271,10 @@ function update(){
         let letter=currTile.innerText;
         
         if(!currTile.classList.contains("correct"))
-        // if(word.includes(letter)&&letterCount[letter]>0)
-        if(letterCount[letter]>0)
         {
-            currTile.classList.add("present");
+            if(letterCount[letter]>0)
+            {
+                currTile.classList.add("present");
 
             // let keyTile=document.getElementById("Key"+letter);
 
@@ -256,17 +284,19 @@ function update(){
             // }
         
 
-            letterCount[letter]-=1;
-        }
-        else{
-            currTile.classList.add("absent");
+                letterCount[letter]-=1;
+            }
+            else{
+                currTile.classList.add("absent");
             // let keyTile=document.getElementById("Key"+letter);
             
             // keyTile.classList.add("absent");
+            }
+        
         }
     
         }
-        row+=1;
-            col=0;
+    row+=1;
+    col=0;
 
 }
