@@ -2,7 +2,7 @@ var height= 6;
 var width= 9;
  
 var row=0;
-var col=0;
+var col=-1;
 var toggle=true;
 
 var gameOver=false;
@@ -43,9 +43,7 @@ function initialize(){
           let board_key = document.getElementById(tileId);
         
       
-          board_key.addEventListener("click", (e) => {
-            processClick(e);
-          });
+          board_key.addEventListener("click", processClick);
         }
       }
     
@@ -55,7 +53,7 @@ let keyboard=[["0","1","2"],
               ["6","7","8"],
               ["Enter","9","⌫"]]
 
-let key=document.getElementById("keyboard");
+// let key=document.getElementById("keyboard");
 for(let i=0;i<keyboard.length;i++)
 {
     let currRow=keyboard[i];
@@ -87,6 +85,10 @@ for(let i=0;i<keyboard.length;i++)
         {
             keyTile.classList.add("enter-key-tile");
         }
+        else if(key=="⌫")
+        {
+            keyTile.classList.add("enter-key-tile");
+        }
         else{
             keyTile.classList.add("key-tile");
         }
@@ -111,9 +113,10 @@ for(let i=0;i<keyboard.length;i++)
 function processClick(e)
 {
     console.log(e.target.id);
-    // let str_col=e.target.id[2];
-    // let str_row=e.target.id[0];
-    // col=str_col;
+    let str_col=Number(e.target.id[2]);
+    let str_row=Number(e.target.id[0]);
+    if(row==str_row)
+    {col=    str_col;}
     // row=str_row;
 
 }
@@ -141,29 +144,59 @@ function processInput(e){
 
     if(str>="Key0"&&str<="Key9")  
     {
-        if(col<width)      
-        {
+        if(col<width-1&&col>-1)      
+        {   
             let currTile=document.getElementById(row.toString()+'-'+col.toString());
-            if(currTile.innerText == "")
+            if(currTile.innerText=="")
             {
+                console.log("its empty")
                 currTile.innerText=str[3];
-                
-
-                col+=1;
             }
+            else{
+                let prev=col;
+                col+=1;
+                currTile=document.getElementById(row.toString()+'-'+col.toString());
+                if(currTile.innerText=="")
+                {
+                // console.log("its empty")
+                currTile.innerText=str[3];
+                }
+                else{
+                col=prev;
+                }
+            }
+            
+        }
+        if(col==-1)
+        {
+            col+=1;
+            let currTile=document.getElementById(row.toString()+'-'+col.toString());
+                currTile.innerText=str[3];
         }
     }
     else if(str=="Backspace")
     {
-        if(col>0&&col<=width)
+        if(col>=0&&col<width)
         {
-            
+            let currTile=document.getElementById(row.toString()+'-'+col.toString());
+            currTile.innerText="";
             col-=1;
         }
-        let currTile=document.getElementById(row.toString()+'-'+col.toString());
+        else if(col==width)
+        {
+            col-=1;
+            let currTile=document.getElementById(row.toString()+'-'+col.toString());
         currTile.innerText="";
+
+        }
+        else if(col==0)
+        {
+            let currTile=document.getElementById(row.toString()+'-'+col.toString());
+            currTile.innerText="";
+        }
+        
     }
-    else if(str=="Enter" && col==width&& gameOver==false)
+    else if(str=="Enter" && col==width-1&& gameOver==false)
     {
         update();
         
@@ -172,7 +205,7 @@ function processInput(e){
     {
         gameOver=true;
         toggle=false;
-        document.getElementById("answer").innerText="Better luck next Time! Correct Number is "+word;
+        document.getElementById("answer").innerText="Better luck next Time! Correct Word was "+word;
         document.removeEventListener("keyup",document);
         
         return;
@@ -216,24 +249,55 @@ function update(){
     for(let c=0;c<width;c++){
         let currTile=document.getElementById(row.toString()+'-'+c.toString());
         let letter=currTile.innerText;
-    
+        let keyTile=document.getElementById("Key"+letter);
         if(word[c]==letter)
         {
             currTile.classList.add("correct");
-        // let keyTile=document.getElementById("Key"+letter);
-        // if(keyTile.classList.contains("present")){
-        // keyTile.classList.remove("present");
-        // keyTile.classList.add("correct");
-        // }
-        // else{
-        //     keyTile.classList.add("correct");
-        // }
+            
+            if(keyTile.classList.contains("present")){
+                keyTile.classList.remove("present");
+                keyTile.classList.add("correct");
+            }
+            else if(keyTile.classList.contains("absent"))
+            {
+                keyTile.classList.remove("absent");
+                keyTile.classList.add("correct");
+            }
+            else{
+                keyTile.classList.add("correct");
+            }
 
 
 
 
             correct+=1;
             letterCount[letter]-=1;
+        }
+        else{
+            if(!currTile.classList.contains("correct"))
+            {
+                if(letterCount[letter]>0)
+                {
+                    currTile.classList.add("present");
+
+                
+
+                    if(!keyTile.classList.contains("correct"))
+                    {
+                        keyTile.classList.add("present");
+                    }
+        
+
+                    letterCount[letter]-=1;
+                }
+
+                else{
+                    currTile.classList.add("absent");
+                
+                    if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
+                        {keyTile.classList.add("absent");}
+                }
+            }
         }
     
 
@@ -266,37 +330,8 @@ function update(){
 
     }
 
-    for(let c=0;c<width;c++){
-        let currTile=document.getElementById(row.toString()+'-'+c.toString());
-        let letter=currTile.innerText;
-        
-        if(!currTile.classList.contains("correct"))
-        {
-            if(letterCount[letter]>0)
-            {
-                currTile.classList.add("present");
-
-            // let keyTile=document.getElementById("Key"+letter);
-
-            // if(!keyTile.classList.contains("correct"))
-            // {
-            //     keyTile.classList.add("present");
-            // }
-        
-
-                letterCount[letter]-=1;
-            }
-            else{
-                currTile.classList.add("absent");
-            // let keyTile=document.getElementById("Key"+letter);
-            
-            // keyTile.classList.add("absent");
-            }
-        
-        }
     
-        }
     row+=1;
-    col=0;
+    col=-1;
 
 }
