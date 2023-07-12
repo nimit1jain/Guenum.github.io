@@ -230,6 +230,7 @@ function update(){
 
     let correct=0;
     let letterCount={};
+    let presentlist={};
 
     for(let i=0;i<word.length;i++)
     {
@@ -240,6 +241,7 @@ function update(){
          else {
             letterCount[letter] = 1;
          }
+        presentlist[i]=false;
         
     }
 
@@ -252,8 +254,23 @@ function update(){
         let keyTile=document.getElementById("Key"+letter);
         if(word[c]==letter)
         {
-            currTile.classList.add("correct");
             
+            currTile.classList.add("correct");
+            if(letterCount[letter]==0){
+
+                for(let i=c;i>=0;i--)
+                {
+                    let currTile=document.getElementById(row.toString()+'-'+i.toString());
+                    if(currTile.classList.contains("present")&&currTile.innerText==letter){
+                        currTile.classList.remove("present");
+                        currTile.classList.add("absent");
+                        
+                    }
+                    
+                }
+            }   
+
+
             if(keyTile.classList.contains("present")){
                 keyTile.classList.remove("present");
                 keyTile.classList.add("correct");
@@ -264,7 +281,8 @@ function update(){
                 keyTile.classList.add("correct");
             }
             else{
-                keyTile.classList.add("correct");
+                if(!keyTile.classList.contains("correct"))
+                {keyTile.classList.add("correct");}
             }
 
 
@@ -274,30 +292,53 @@ function update(){
             letterCount[letter]-=1;
         }
         else{
-            if(!currTile.classList.contains("correct"))
+            
+            if(letterCount[letter]>0)
             {
-                if(letterCount[letter]>0)
-                {
-                    currTile.classList.add("present");
-
-                
-
-                    if(!keyTile.classList.contains("correct"))
+                currTile.classList.add("present");
+                if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
                     {
                         keyTile.classList.add("present");
+                        presentlist[c]=true;
                     }
+
+
+                letterCount[letter]-=1;
+            }
+            else{
+                currTile.classList.add("absent");
+                if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
+                        {keyTile.classList.add("absent");}
+            }
+
+
+
+
+
+            // if(!currTile.classList.contains("correct"))
+            // {
+            //     if(letterCount[letter]>0)
+            //     {
+            //         currTile.classList.add("present");
+
+                
+
+            //         if(!keyTile.classList.contains("correct"))
+            //         {
+            //             keyTile.classList.add("present");
+            //         }
         
 
-                    letterCount[letter]-=1;
-                }
+            //         letterCount[letter]-=1;
+            //     }
 
-                else{
-                    currTile.classList.add("absent");
+            //     else{
+            //         currTile.classList.add("absent");
                 
-                    if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
-                        {keyTile.classList.add("absent");}
-                }
-            }
+            //         if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
+            //             {keyTile.classList.add("absent");}
+            //     }
+            // }
         }
     
 
