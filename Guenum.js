@@ -137,7 +137,8 @@ function processInput(e){
     if(gameOver&&toggle){ 
         document.getElementById("answer").innerText="You Have guessed right!";
         document.removeEventListener("keyup",document);
- 
+        row=height;
+        col=-1;
         return;
     }
     
@@ -198,7 +199,8 @@ function processInput(e){
     }
     else if(str=="Enter" && col==width-1&& gameOver==false)
     {
-        update();
+        // update();
+        addAnimation();
         
     }
     if(!gameOver&&row==height)
@@ -207,7 +209,8 @@ function processInput(e){
         toggle=false;
         document.getElementById("answer").innerText="Better luck next Time! Correct Word was "+word;
         document.removeEventListener("keyup",document);
-        
+        row=height;
+        col=-1;
         return;
     }
 }
@@ -366,8 +369,12 @@ function update(){
             }
             
             document.removeEventListener("keyup",document);
+            row=height;
+        col=-1;
             return;
         }
+
+        // addAnimation(currTile);
 
     }
 
@@ -375,4 +382,29 @@ function update(){
     row+=1;
     col=-1;
 
+}
+
+
+function addAnimation(){
+    for(let c=0;c<width;c++)
+    {
+        let currTile = document.getElementById(row.toString()+'-'+c.toString());
+        currTile.classList.add("flip-in");
+    }
+    
+    setTimeout(() => {
+        update()
+    },150);
+
+    setTimeout(() => {
+        let temprow=row-1;
+        for(let c=0;c<width;c++)
+        {
+            let currTile = document.getElementById(temprow.toString()+'-'+c.toString());
+            // currTile.classList.remove("flip-in");
+        currTile.classList.add("flip-out");
+        }
+        
+    }, 150);
+    
 }
