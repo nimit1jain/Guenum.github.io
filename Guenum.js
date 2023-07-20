@@ -1,13 +1,13 @@
-var height= 6;
-var width= 9;
- 
-var row=0;
-var col=-1;
-var toggle=true;
+var height = 6;
+var width = 9;
 
-var gameOver=false;
+var row = 0;
+var col = -1;
+var toggle = true;
 
-var word=Math.floor(100000000 + Math.random() * 900000000).toString();
+var gameOver = false;
+
+var word = Math.floor(100000000 + Math.random() * 900000000).toString();
 
 console.log(word);
 
@@ -15,202 +15,231 @@ console.log(word);
 window.onload=function(){
     initialize();
 }
+setTimeout(() => {
+    let btn = document.getElementById("popupbtn");
+    
+    btn.addEventListener("click", (e) => { closepopup(e) });
+
+    function closepopup(e) {
+        let elem = document.getElementById("popup");
+        if(elem.classList.contains("open-popup"))
+        {
+            elem.classList.remove("open-popup");
+        }
+        if(elem.classList.contains("close-popup"))
+        {
+            elem.classList.remove("close-popup");
+        }
+        elem.classList.add("close-popup")
+        
+    }
+}, 100);
+
+setTimeout(() => {
+let helpbtn = document.getElementById("help");
+    
+helpbtn.addEventListener("click", (e) => { openpopup(e) });
+
+function openpopup(e) {
+    let elem = document.getElementById("popup");
+    if(elem.classList.contains("open-popup"))
+        {
+            elem.classList.remove("open-popup");
+        }
+        if(elem.classList.contains("close-popup"))
+        {
+            elem.classList.remove("close-popup");
+        }
+    elem.classList.add("open-popup")
+    
+}
+
+}, 100);
+
+
 
 // This function intialize the keyboard
-function initialize(){
-    for(let r=0;r<height;r++)
-    {
-        let newdiv=document.createElement("div");
-        newdiv.className="newd";
-        for(let c=0;c<width;c++)
-        {
-            let tile=document.createElement("div");
-            tile.id=r.toString()+'-'+c.toString();
-            
+function initialize() {
+    for (let r = 0; r < height; r++) {
+        let newdiv = document.createElement("div");
+        newdiv.className = "newd";
+        for (let c = 0; c < width; c++) {
+            let tile = document.createElement("div");
+            tile.id = r.toString() + '-' + c.toString();
+
             tile.classList.add("tile");
-            tile.innerText="";
+            tile.innerText = "";
             newdiv.appendChild(tile);
-            
+
 
         }
         document.getElementById("board").appendChild(newdiv);
-        
+
     }
 
     for (let r = 0; r < height; r++) {
         for (let c = 0; c < width; c++) {
-          let tileId = r.toString() + '-' + c.toString();
-          let board_key = document.getElementById(tileId);
-        
-      
-          board_key.addEventListener("click", processClick);
-        }
-      }
-    
-   
-let keyboard=[["0","1","2"],
-              ["3","4","5"],
-              ["6","7","8"],
-              ["Enter","9","⌫"]]
-
-// let key=document.getElementById("keyboard");
-for(let i=0;i<keyboard.length;i++)
-{
-    let currRow=keyboard[i];
-    let keyboardRow=document.createElement("div");
-    keyboardRow.classList.add("keyboard-row");
-
-    for(let j=0;j<currRow.length;j++)
-    {
-        let keyTile=document.createElement("div");
-        let key=currRow[j];
-        keyTile.innerText=key;
-        if(key=="Enter")
-        {
-            keyTile.id="Enter";
-        }
-        else if(key=="⌫")
-        {
-            keyTile.id="Backspace";
-        }
+            let tileId = r.toString() + '-' + c.toString();
+            let board_key = document.getElementById(tileId);
 
 
-        else if(key>="0"&&key<="9")   
-        {
-            keyTile.id="Key"+key;
+            board_key.addEventListener("click", processClick);
         }
-
-        
-        if(key=="Enter")
-        {
-            keyTile.classList.add("enter-key-tile");
-        }
-        else if(key=="⌫")
-        {
-            keyTile.classList.add("enter-key-tile");
-        }
-        else{
-            keyTile.classList.add("key-tile");
-        }
-        keyboardRow.appendChild(keyTile);
-        keyTile.addEventListener("click",processKey);
     }
-    document.body.appendChild(keyboardRow);
-}
+
+
+    let keyboard = [["0", "1", "2"],
+    ["3", "4", "5"],
+    ["6", "7", "8"],
+    ["Enter", "9", "⌫"]]
+
+    // let key=document.getElementById("keyboard");
+    for (let i = 0; i < keyboard.length; i++) {
+        let currRow = keyboard[i];
+        let keyboardRow = document.createElement("div");
+        keyboardRow.classList.add("keyboard-row");
+
+        for (let j = 0; j < currRow.length; j++) {
+            let keyTile = document.createElement("div");
+            let key = currRow[j];
+            keyTile.innerText = key;
+            if (key == "Enter") {
+                keyTile.id = "Enter";
+            }
+            else if (key == "⌫") {
+                keyTile.id = "Backspace";
+            }
+
+
+            else if (key >= "0" && key <= "9") {
+                keyTile.id = "Key" + key;
+            }
+
+
+            if (key == "Enter") {
+                keyTile.classList.add("enter-key-tile");
+            }
+            else if (key == "⌫") {
+                keyTile.classList.add("enter-key-tile");
+            }
+            else {
+                keyTile.classList.add("key-tile");
+            }
+            keyboardRow.appendChild(keyTile);
+            keyTile.addEventListener("click", processKey);
+        }
+        document.body.appendChild(keyboardRow);
+    }
 
 
 
-    document.addEventListener("keyup",(e)=>{
+    document.addEventListener("keyup", (e) => {
         // console.log(e.code);
         processInput(e);
     })
-    
+
 
 
 }
 
 
-function processClick(e)
-{
+function processClick(e) {
     console.log(e.target.id);
-    let str_col=Number(e.target.id[2]);
-    let str_row=Number(e.target.id[0]);
-    if(row==str_row)
-    {col=    str_col;}
+    let str_col = Number(e.target.id[2]);
+    let str_row = Number(e.target.id[0]);
+    if (row == str_row) { col = str_col; }
     // row=str_row;
 
 }
 
-function processKey()
-{
-    let e={"code":this.id};
+function processKey() {
+    let e = { "code": this.id };
     processInput(e);
 }
 
-function processInput(e){
+function processInput(e) {
     // console.log(e.code);
-    let str=e.code;
-    str=str.replace("Numpad","Key");
-    str=str.replace("Digit","Key");
+    let str = e.code;
+    str = str.replace("Numpad", "Key");
+    str = str.replace("Digit", "Key");
     // e.code=console.log(e.code.replace("Digit","Key"));
-    
-    if(gameOver&&toggle){ 
-        document.getElementById("answer").innerText="You Have guessed right!";
-        document.removeEventListener("keyup",document);
-        row=height;
-        col=-1;
+
+    if (gameOver && toggle) {
+        document.getElementById("answer").innerText = "You Have guessed right!";
+        document.removeEventListener("keyup", document);
+        row = height;
+        col = -1;
         return;
     }
-    
 
-    if(str>="Key0"&&str<="Key9")  
-    {
-        if(col<width-1&&col>-1)      
-        {   
-            let currTile=document.getElementById(row.toString()+'-'+col.toString());
-            if(currTile.innerText=="")
-            {
-                console.log("its empty")
-                currTile.innerText=str[3];
+
+    if (str >= "Key0" && str <= "Key9") {
+        if (col < width - 1 && col > -1) {
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            if (currTile.innerText == "") {
+
+                currTile.innerText = str[3];
             }
-            else{
-                let prev=col;
-                col+=1;
-                currTile=document.getElementById(row.toString()+'-'+col.toString());
-                if(currTile.innerText=="")
-                {
-                // console.log("its empty")
-                currTile.innerText=str[3];
+            else {
+                let prev = col;
+                col += 1;
+                currTile = document.getElementById(row.toString() + '-' + col.toString());
+                if (currTile.innerText == "") {
+                    // console.log("its empty")
+                    currTile.innerText = str[3];
                 }
-                else{
-                col=prev;
+                else {
+                    col = prev;
                 }
             }
-            
-        }
-        if(col==-1)
-        {
-            col+=1;
-            let currTile=document.getElementById(row.toString()+'-'+col.toString());
-                currTile.innerText=str[3];
-        }
-    }
-    else if(str=="Backspace")
-    {
-        if(col>=0&&col<width)
-        {
-            let currTile=document.getElementById(row.toString()+'-'+col.toString());
-            currTile.innerText="";
-            col-=1;
-        }
-        else if(col==width)
-        {
-            col-=1;
-            let currTile=document.getElementById(row.toString()+'-'+col.toString());
-        currTile.innerText="";
 
         }
-        else if(col==0)
-        {
-            let currTile=document.getElementById(row.toString()+'-'+col.toString());
-            currTile.innerText="";
+        if (col == -1) {
+            col += 1;
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            currTile.innerText = str[3];
         }
-        
     }
-    else if(str=="Enter" && col==width-1&& gameOver==false)
-    {
-        // update();
-        addAnimation();
-        
+    else if (str == "Backspace") {
+        if (col >= 0 && col < width) {
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            currTile.innerText = "";
+            col -= 1;
+        }
+        else if (col == width) {
+            col -= 1;
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            currTile.innerText = "";
+
+        }
+        else if (col == 0) {
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            currTile.innerText = "";
+        }
+
     }
-    if(!gameOver&&row==height)
-    {
-        gameOver=true;
-        toggle=false;
-        document.getElementById("answer").innerText="Better luck next Time! Correct Word was "+word;
-        document.removeEventListener("keyup",document);
-        row=height;
-        col=-1;
+    else if (str == "Enter" && gameOver == false) {
+
+        let flag = false;
+        for (let c = 0; c < width; c++) {
+            let currTile = document.getElementById(row.toString() + '-' + c.toString());
+            let letter = currTile.innerText;
+            if (letter == "") {
+
+                flag = true;
+            }
+        }
+
+        if (!flag) { addAnimation(); }
+
+    }
+    if (!gameOver && row == height) {
+        gameOver = true;
+        toggle = false;
+        document.getElementById("answer").innerText = "Better luck next Time! Correct Word was " + word;
+        document.removeEventListener("keyup", document);
+        row = height;
+        col = -1;
         return;
     }
 }
@@ -218,100 +247,91 @@ function processInput(e){
 
 
 
-function update(){
+function update() {
 
-    let guess="";
-    document.getElementById("answer").innerText="";
+    let guess = "";
+    document.getElementById("answer").innerText = "";
 
-    for(let c=0;c<width;c++)
-    {
-        let currTile = document.getElementById(row.toString()+'-'+c.toString());
-        let letter=currTile.innerText;
-        guess+=letter;
+    for (let c = 0; c < width; c++) {
+        let currTile = document.getElementById(row.toString() + '-' + c.toString());
+        let letter = currTile.innerText;
+        guess += letter;
     }
-   
 
-    let correct=0;
-    let letterCount={};
-    let presentlist={};
 
-    for(let i=0;i<word.length;i++)
-    {
-        let letter=word[i];
+    let correct = 0;
+    let letterCount = {};
+    let presentlist = {};
+
+    for (let i = 0; i < word.length; i++) {
+        let letter = word[i];
         if (letterCount[letter]) {
             letterCount[letter] += 1;
-         } 
-         else {
+        }
+        else {
             letterCount[letter] = 1;
-         }
-        presentlist[i]=false;
-        
+        }
+        presentlist[i] = false;
+
     }
 
 
 
 
-    for(let c=0;c<width;c++){
-        let currTile=document.getElementById(row.toString()+'-'+c.toString());
-        let letter=currTile.innerText;
-        let keyTile=document.getElementById("Key"+letter);
-        if(word[c]==letter)
-        {
-            
-            currTile.classList.add("correct");
-            if(letterCount[letter]==0){
+    for (let c = 0; c < width; c++) {
+        let currTile = document.getElementById(row.toString() + '-' + c.toString());
+        let letter = currTile.innerText;
+        let keyTile = document.getElementById("Key" + letter);
+        if (word[c] == letter) {
 
-                for(let i=c;i>=0;i--)
-                {
-                    let currTile=document.getElementById(row.toString()+'-'+i.toString());
-                    if(currTile.classList.contains("present")&&currTile.innerText==letter){
+            currTile.classList.add("correct");
+            if (letterCount[letter] == 0) {
+
+                for (let i = c; i >= 0; i--) {
+                    let currTile = document.getElementById(row.toString() + '-' + i.toString());
+                    if (currTile.classList.contains("present") && currTile.innerText == letter) {
                         currTile.classList.remove("present");
                         currTile.classList.add("absent");
-                        
+
                     }
-                    
+
                 }
-            }   
+            }
 
 
-            if(keyTile.classList.contains("present")){
+            if (keyTile.classList.contains("present")) {
                 keyTile.classList.remove("present");
                 keyTile.classList.add("correct");
             }
-            else if(keyTile.classList.contains("absent"))
-            {
+            else if (keyTile.classList.contains("absent")) {
                 keyTile.classList.remove("absent");
                 keyTile.classList.add("correct");
             }
-            else{
-                if(!keyTile.classList.contains("correct"))
-                {keyTile.classList.add("correct");}
+            else {
+                if (!keyTile.classList.contains("correct")) { keyTile.classList.add("correct"); }
             }
 
 
 
 
-            correct+=1;
-            letterCount[letter]-=1;
+            correct += 1;
+            letterCount[letter] -= 1;
         }
-        else{
-            
-            if(letterCount[letter]>0)
-            {
+        else {
+
+            if (letterCount[letter] > 0) {
                 currTile.classList.add("present");
-                if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
-                    {
-                        keyTile.classList.add("present");
-                        presentlist[c]=true;
-                    }
+                if (!keyTile.classList.contains("correct") && !keyTile.classList.contains("present")) {
+                    keyTile.classList.add("present");
+                    presentlist[c] = true;
+                }
 
 
-                letterCount[letter]-=1;
+                letterCount[letter] -= 1;
             }
-            else{
+            else {
                 currTile.classList.add("absent");
-                if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
-                        {keyTile.classList.add("absent");}
+                if (!keyTile.classList.contains("correct") && !keyTile.classList.contains("present")) { keyTile.classList.add("absent"); }
             }
 
 
@@ -324,53 +344,52 @@ function update(){
             //     {
             //         currTile.classList.add("present");
 
-                
+
 
             //         if(!keyTile.classList.contains("correct"))
             //         {
             //             keyTile.classList.add("present");
             //         }
-        
+
 
             //         letterCount[letter]-=1;
             //     }
 
             //     else{
             //         currTile.classList.add("absent");
-                
+
             //         if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
             //             {keyTile.classList.add("absent");}
             //     }
             // }
         }
-    
 
-        if(correct==width)
-        {
-            gameOver=true;
-            toggle=false;
-            if(row==0){
-                document.getElementById("answer").innerText="Clairvoyant! You Have guessed right!";
+
+        if (correct == width) {
+            gameOver = true;
+            toggle = false;
+            if (row == 0) {
+                document.getElementById("answer").innerText = "Clairvoyant! You Have guessed right!";
             }
-            else if(row==1){
-                document.getElementById("answer").innerText="Genius! You Have guessed right!";
+            else if (row == 1) {
+                document.getElementById("answer").innerText = "Genius! You Have guessed right!";
             }
-            else if(row==2){
-                document.getElementById("answer").innerText="Mastermind! You Have guessed right!";
+            else if (row == 2) {
+                document.getElementById("answer").innerText = "Mastermind! You Have guessed right!";
             }
-            else if(row==3){
-                document.getElementById("answer").innerText="Brilliant! You Have guessed right!";
+            else if (row == 3) {
+                document.getElementById("answer").innerText = "Brilliant! You Have guessed right!";
             }
-            else if(row==4){
-                document.getElementById("answer").innerText="Excellent! You Have guessed right!";
+            else if (row == 4) {
+                document.getElementById("answer").innerText = "Excellent! You Have guessed right!";
             }
-            else if(row==5){
-                document.getElementById("answer").innerText="Superb! You Have guessed right!";
+            else if (row == 5) {
+                document.getElementById("answer").innerText = "Superb! You Have guessed right!";
             }
-            
-            document.removeEventListener("keyup",document);
-            row=height;
-        col=-1;
+
+            document.removeEventListener("keyup", document);
+            row = height;
+            col = -1;
             return;
         }
 
@@ -378,33 +397,31 @@ function update(){
 
     }
 
-    
-    row+=1;
-    col=-1;
+
+    row += 1;
+    col = -1;
 
 }
 
 
-function addAnimation(){
-    for(let c=0;c<width;c++)
-    {
-        let currTile = document.getElementById(row.toString()+'-'+c.toString());
+function addAnimation() {
+    for (let c = 0; c < width; c++) {
+        let currTile = document.getElementById(row.toString() + '-' + c.toString());
         currTile.classList.add("flip-in");
     }
-    
-    setTimeout(() => {
-        update()
-    },150);
 
     setTimeout(() => {
-        let temprow=row-1;
-        for(let c=0;c<width;c++)
-        {
-            let currTile = document.getElementById(temprow.toString()+'-'+c.toString());
-            // currTile.classList.remove("flip-in");
-        currTile.classList.add("flip-out");
-        }
-        
+        update()
     }, 150);
-    
+
+    setTimeout(() => {
+        let temprow = row - 1;
+        for (let c = 0; c < width; c++) {
+            let currTile = document.getElementById(temprow.toString() + '-' + c.toString());
+            // currTile.classList.remove("flip-in");
+            currTile.classList.add("flip-out");
+        }
+
+    }, 150);
+
 }
