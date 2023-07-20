@@ -10,11 +10,28 @@
     <script src="Guenum.js"></script>
 </head>
 <body>
-    <h1 id="title">GueNum</h1>
-    <p> Guess a 9-Digit number in 6 tries!</p>
+    <h1  style="text-align: center;"  id="title">GueNum</h1>
+    <button type="button" id="help"> <img style="width: 2rem; "  src="question-mark.png" alt=""></button>
+    <p style="text-align: center;" > Guess a 9-Digit number in 6 tries!</p>
     <hr>
     <br>
-   
+    
+    
+        <div class="dialogue" id="popup">
+
+        
+        <h2>Instructions</h2>
+        
+            <p>You Have to guess a 9-Digit number <b>(Repetition of digits is allowed)</b></p>
+            <p><b>Grey Tile:</b> Digit is not present.</p>
+            <p><b>Orange Tile:</b> Digit is present but not positioned correctly.</p>
+            <p><b>Green Tile:</b> Digit is correctly positioned</p>
+        
+        <button type="button" id="popupbtn" class="ppb" > &times;</button>
+    </div>
+        
+  
+    
 
         <div id="board"></div>
     
