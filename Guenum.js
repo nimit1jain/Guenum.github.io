@@ -220,6 +220,7 @@ function processInput(e) {
     }
     else if (str == "Enter" && gameOver == false&& row<height) {
 
+        
         let flag = false;
         for (let c = 0; c < width; c++) {
             let currTile = document.getElementById(row.toString() + '-' + c.toString());
@@ -229,18 +230,20 @@ function processInput(e) {
                 flag = true;
             }
         }
-
         if (!flag) { addAnimation(); }
 
+        
+
+       
     }
-   
+    
 }
 
 
 
 
 function update() {
-
+   
     let guess = "";
     document.getElementById("answer").innerText = "";
 
@@ -329,6 +332,9 @@ function update() {
 
 
 
+            
+        }
+
 
         if (correct == width) {
             gameOver = true;
@@ -365,15 +371,16 @@ function update() {
 
     row += 1;
     col = -1;
-     if (!gameOver && row == height) {
+    if (row == height) {
         gameOver = true;
         toggle = false;
-        document.getElementById("answer").innerText = "Better luck next Time! Correct Number is " + word;
+        document.getElementById("answer").innerText = "Better luck next Time! Correct number is " + word;
         document.removeEventListener("keyup", document);
         row = height;
         col = -1;
         return;
     }
+
 }
 
 
