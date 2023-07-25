@@ -218,7 +218,7 @@ function processInput(e) {
         }
 
     }
-    else if (str == "Enter" && gameOver == false) {
+    else if (str == "Enter" && gameOver == false && row<height) {
 
         let flag = false;
         for (let c = 0; c < width; c++) {
@@ -233,15 +233,7 @@ function processInput(e) {
         if (!flag) { addAnimation(); }
 
     }
-    if (!gameOver && row == height) {
-        gameOver = true;
-        toggle = false;
-        document.getElementById("answer").innerText = "Better luck next Time! Correct Number is " + word;
-        document.removeEventListener("keyup", document);
-        row = height;
-        col = -1;
-        return;
-    }
+    
 }
 
 
@@ -400,7 +392,15 @@ function update() {
 
     row += 1;
     col = -1;
-
+    if (!gameOver && row == height) {
+        gameOver = true;
+        toggle = false;
+        document.getElementById("answer").innerText = "Better luck next Time! Correct Number is " + word;
+        document.removeEventListener("keyup", document);
+        row = height;
+        col = -1;
+        return;
+    }
 }
 
 
