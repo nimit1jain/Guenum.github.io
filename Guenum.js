@@ -16,7 +16,7 @@ window.onload=function(){
     initialize();
 }
 setTimeout(() => {
-    let btn = document.getElementById("popupbtn");
+    let btn = document.getElementById("bodyy");
     
     btn.addEventListener("click", (e) => { closepopup(e) });
 
@@ -42,6 +42,7 @@ helpbtn.addEventListener("click", (e) => { openpopup(e) });
 
 function openpopup(e) {
     let elem = document.getElementById("popup");
+    console.log("click hua")
     if(elem.classList.contains("open-popup"))
         {
             elem.classList.remove("open-popup");
@@ -88,10 +89,10 @@ function initialize() {
     }
 
 
-    let keyboard = [["0", "1", "2"],
-    ["3", "4", "5"],
-    ["6", "7", "8"],
-    ["Enter", "9", "⌫"]]
+    let keyboard = [["1", "2", "3"],
+    ["4", "5", "6"],
+    ["7", "8", "9"],
+    ["⌫", "0", "Enter"]]
 
     // let key=document.getElementById("keyboard");
     for (let i = 0; i < keyboard.length; i++) {
@@ -147,7 +148,25 @@ function processClick(e) {
     console.log(e.target.id);
     let str_col = Number(e.target.id[2]);
     let str_row = Number(e.target.id[0]);
-    if (row == str_row) { col = str_col; }
+    if (row == str_row) { col = str_col; 
+        let tileId = row.toString() + '-' + col.toString();
+        let board_key = document.getElementById(tileId);
+        
+            for (let c = 0; c < width; c++) {
+                let tileId = row.toString() + '-' + c.toString();
+                let curr_tile = document.getElementById(tileId);
+                if(curr_tile.classList.contains("Hover-class") && c!=col){
+                    curr_tile.classList.remove("Hover-class")
+                }
+            }
+        
+        if(board_key.classList.contains("Hover-class")){
+            board_key.classList.remove("Hover-class")
+        }
+        else{
+            board_key.classList.add("Hover-class")
+        }
+    }
     // row=str_row;
 
 }
@@ -218,8 +237,9 @@ function processInput(e) {
         }
 
     }
-    else if (str == "Enter" && gameOver == false && row<height) {
+    else if (str == "Enter" && gameOver == false&& row<height) {
 
+        
         let flag = false;
         for (let c = 0; c < width; c++) {
             let currTile = document.getElementById(row.toString() + '-' + c.toString());
@@ -229,9 +249,11 @@ function processInput(e) {
                 flag = true;
             }
         }
-
         if (!flag) { addAnimation(); }
 
+        
+
+       
     }
     
 }
@@ -240,7 +262,7 @@ function processInput(e) {
 
 
 function update() {
-
+   
     let guess = "";
     document.getElementById("answer").innerText = "";
 
@@ -329,31 +351,7 @@ function update() {
 
 
 
-
-            // if(!currTile.classList.contains("correct"))
-            // {
-            //     if(letterCount[letter]>0)
-            //     {
-            //         currTile.classList.add("present");
-
-
-
-            //         if(!keyTile.classList.contains("correct"))
-            //         {
-            //             keyTile.classList.add("present");
-            //         }
-
-
-            //         letterCount[letter]-=1;
-            //     }
-
-            //     else{
-            //         currTile.classList.add("absent");
-
-            //         if(!keyTile.classList.contains("correct")&&!keyTile.classList.contains("present"))
-            //             {keyTile.classList.add("absent");}
-            //     }
-            // }
+            
         }
 
 
@@ -392,15 +390,16 @@ function update() {
 
     row += 1;
     col = -1;
-    if (!gameOver && row == height) {
+    if (row == height) {
         gameOver = true;
         toggle = false;
-        document.getElementById("answer").innerText = "Better luck next Time! Correct Number is " + word;
+        document.getElementById("answer").innerText = "Better luck next Time! Correct number is " + word;
         document.removeEventListener("keyup", document);
         row = height;
         col = -1;
         return;
     }
+
 }
 
 
