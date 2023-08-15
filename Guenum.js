@@ -6,14 +6,79 @@ var col = -1;
 var toggle = true;
 
 var gameOver = false;
+function generateRandomNumber() {
+    return Math.floor(Math.random() * 900000000) + 100000000;
+}
+  
+  function isSum45(number) {
+    let sum = 0;
+    while (number > 0) {
+      sum += number % 10;
+      number = Math.floor(number / 10);
+    }
+    return sum === 45;
+}
+  
 
-var word = Math.floor(100000000 + Math.random() * 900000000).toString();
+function getnumber(){
+    let randomNumber = generateRandomNumber();
+  while (!isSum45(randomNumber)) {
+    randomNumber = generateRandomNumber();
+  }
+  return randomNumber;
+}
+
+  
+
+// var word = getnumber();
+
+
+
+if (!localStorage.getItem("r_number")) {
+    const initialWord = getnumber();
+    const currentDate = getCurrentDate();
+    localStorage.setItem("r_number", initialWord);
+    localStorage.setItem("wordDate", currentDate);
+}
+
+
+
+
+function getCurrentDate() {
+    const today = new Date();
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+}
+
+function updateWordOfTheDay() {
+    const storedDate = localStorage.getItem("wordDate");
+    const currentDate = getCurrentDate();
+
+    if (storedDate !== currentDate) {
+      const newWord = getnumber();
+      localStorage.setItem("r_number", newWord);
+      localStorage.setItem("wordDate", currentDate);
+      
+    } 
+    
+}
+
+
+  // Fetch and display the word on page load
+ 
+
+
+
+var word=localStorage.getItem("r_number")
+
+
+// var word = Math.floor(100000000 + Math.random() * 900000000).toString();
 
 console.log(word);
 
 
 window.onload=function(){
     initialize();
+    updateWordOfTheDay();
 }
 setTimeout(() => {
     let btn = document.getElementById("bodyy");
