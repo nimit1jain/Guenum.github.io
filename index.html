@@ -7,22 +7,20 @@
     <title>GueNum</title>
     <link rel="icon" href="GN.png" />
     <link rel="stylesheet" href="Guenum.css">
-    <script src="oops_obfuscator.js"></script>
+    <script src="Guenum.js"></script>
 </head>
 <body>
     <button type="button" id="help"> <img style="width: 2rem; "  src="question-mark.png" alt=""></button>
     <div id="bodyy">
     <h1  style="text-align: center;"  id="title">GueNum</h1>
-    
-    <p style="text-align: center;" > Guess the number!</p>
+    <p style="text-align: center ; font-weight: 500;margin: auto;" > Guess the number!</p>
     <hr>
-    <br>
     
     
         <div class="dialogue" id="popup">
 
         
-        <h2>Instructions</h2>
+        <h2>Instructions - GueNum</h2>
         
             <p>You have six attempts to guess a nine-digit number </p>
             <p><b>(Repetition of digits allowed)</b></p>
@@ -32,15 +30,28 @@
         
         <button type="button" id="popupbtn" class="ppb" > &times;</button>
     </div>
+
+    <div class="dialogue close-popup" id="gameoverpopup">
+
+        
+        <h2>Gameover</h2>
+            <p id="answer" >  </p>
+        <p id="countdown" style= "    color: #d90a0a;
+    font-weight: 500;
+    margin-bottom: 20px;"> </p>
+            <p><b>Play our harder version to test your skills!</b></p>
+            <a href="code45.html"><b>Code45</b></a>
+
+        
+        <button type="button" id="gameoverpopupbtn" class="ppb" > &times;</button>
+    </div>
         
   
-    <div id="countdown" style= "    color: rgba(50 159 95);
-    font-weight: 500;
-    margin-bottom: 20px;"> </div>
+    
 
         <div id="board"></div>
     
-    <div id="answer"></div>
+    <!-- <div id="answer"></div> -->
 
     </div>
 </body>
