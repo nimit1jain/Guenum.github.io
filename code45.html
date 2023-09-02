@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GueNum</title>
+    <link rel="icon" href="GN.png" />
+    <link rel="stylesheet" href="Guenum.css">
+    <script src="code45.js"></script>
+</head>
+<body>
+    <button type="button" id="help"> <img style="width: 2rem; "  src="question-mark.png" alt=""></button>
+    <div id="bodyy">
+    <h1  style="text-align: center;"  id="title">Code45</h1>
+    <p style="text-align: center ; font-weight: 500;margin: auto;" > Guess the number!</p>
+    <hr>
+    
+    
+        <div class="dialogue" id="popup">
+
+        
+        <h2>Instructions - Code45</h2>
+        
+            <p>You have six attempts to guess a nine-digit number whose digits sum to 45 </p>
+            <p><b>(Repetition of digits allowed)</b></p>
+            <p><b>Grey Tile:</b> Digit is not present</p>
+            <p><b>Orange Tile:</b> Digit is present but not positioned correctly</p>
+            <p><b>Green Tile:</b> Digit is correctly positioned</p>
+        
+        <button type="button" id="popupbtn" class="ppb" > &times;</button>
+    </div>
+    
+    <div class="dialogue close-popup" id="gameoverpopup">
+
+        
+        <h2>Gameover</h2>
+            <p id="answer">  </p>
+            <p id="countdown" style= "    color: #d90a0a;
+            font-weight: 500;
+            margin-bottom: 20px;"> </p>
+            <p><b>Play our easier version to test your skills!</b></p>
+            <a href="index.html"><b>GueNum</b></a>
+
+        
+        <button type="button" id="gameoverpopupbtn" class="ppb" > &times;</button>
+    </div>
+        
+  
+        <div id="board"></div>
+    
+    <div id="answer"></div>
+
+    </div>
+</body>
+</html>
