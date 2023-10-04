@@ -1,12 +1,12 @@
 setTimeout(() => {
-    let btn = document.getElementById("bodyy");
+    let btn = document.getElementById("popup");
     
     btn.addEventListener("click", (e) => { closepopup(e) });
 }, 100);
 
 setTimeout(() => {
     
-    let popbtn=document.getElementById("gameoverpopupbtn");
+    let popbtn=document.getElementById("gameoverpopup");
     popbtn.addEventListener("click",(e)=> {goverclosepopup(e)});
     
 }, 100);
@@ -71,6 +71,8 @@ function getNumber45() {
 
 class Game {
     constructor(height, width) {
+        this.updateWordOfTheDay();
+        this.updateCountdown();
         this.height = height;
         this.width = width;
         this.row = 1;
@@ -165,12 +167,11 @@ class Game {
             // console.log(e.code);
             this.processInput(e);
         })
-        this.updateWordOfTheDay();
-        this.updateCountdown();
+        
 
     }
     updateCountdown() {
-        const updateHour = 4; // The hour when the update will occur (e.g., 15 for 
+        const updateHour = 24; // The hour when the update will occur (e.g., 15 for 
         function calculateTimeRemaining() {
             const now = new Date();
             const nextUpdate = new Date();
@@ -203,8 +204,9 @@ class Game {
         const storedDate = localStorage.getItem("wordDate");
         const currentDate = getCurrentDate();
 
-        if (storedDate !== currentDate) {
+        if (storedDate != currentDate) {
             const newWord = getNumbersimple();
+
             localStorage.setItem("r_number", newWord);
             localStorage.setItem("wordDate", currentDate);
 
@@ -378,7 +380,6 @@ class Game {
 
 
     update() {
-        // Your update logic here
 
         let guess = "";
         document.getElementById("answer").innerText = "";
@@ -416,11 +417,11 @@ class Game {
                 if (letterCount[letter] == 0) {
 
                     for (let i = c; i > 0; i--) {
-                        let currTile = document.getElementById(this.row.toString() + '-' + i.toString());
-                        if (currTile.classList.contains("present") && currTile.innerText == letter) {
-                            currTile.classList.remove("present");
-                            currTile.classList.add("absent");
-
+                        let Tile = document.getElementById(this.row.toString() + '-' + i.toString());
+                        if (Tile.classList.contains("present") && Tile.innerText == letter) {
+                            Tile.classList.remove("present");
+                            Tile.classList.add("absent");
+                            break;
                         }
 
                     }
@@ -532,11 +533,13 @@ window.onload = function () {
     if (!localStorage.getItem("r_number")) {
         const initialWord = getNumbersimple();
         const currentDate = getCurrentDate();
-
+        
         localStorage.setItem("r_number", initialWord);
         localStorage.setItem("wordDate", currentDate);
 
     }
+    
+   
 
 
 
