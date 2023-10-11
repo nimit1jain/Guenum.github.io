@@ -205,13 +205,13 @@ class Game {
         const storedDate = localStorage.getItem("wordDate");
         const currentDate = getCurrentDate();
 
-        if (storedDate !== currentDate) {
+        if (storedDate != currentDate) {
             const newWord = getNumber45();
             localStorage.setItem("45_number", newWord);
             localStorage.setItem("wordDate", currentDate);
 
         }
-        console.log(localStorage.getItem("45_number"))
+        
     }
 
 
