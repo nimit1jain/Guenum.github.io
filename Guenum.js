@@ -171,7 +171,7 @@ class Game {
 
     }
     updateCountdown() {
-        const updateHour = 24; // The hour when the update will occur (e.g., 15 for 
+        const updateHour = 12; // The hour when the update will occur (e.g., 15 for 
         function calculateTimeRemaining() {
             const now = new Date();
             const nextUpdate = new Date();
