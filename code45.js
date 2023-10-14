@@ -72,6 +72,7 @@ function getNumber45() {
 
 class Game {
     constructor(height, width) {
+        
         this.updateWordOfTheDay();
         this.updateCountdown();
         this.height = height;
@@ -178,6 +179,8 @@ class Game {
             const nextUpdate = new Date();
     
             nextUpdate.setHours(updateHour, 0, 0, 0);
+        
+            
             if (nextUpdate <= now) {
                 nextUpdate.setDate(nextUpdate.getDate() + 1); // Next update will be tomorrow
             }
@@ -202,16 +205,17 @@ class Game {
  
 
     updateWordOfTheDay() {
-        const storedDate = localStorage.getItem("wordDate");
-        const currentDate = getCurrentDate();
-
+        let storedDate = localStorage.getItem("numDate");
+        let currentDate = getCurrentDate();
         if (storedDate != currentDate) {
-            const newWord = getNumber45();
+            let newWord = getNumber45();
             localStorage.setItem("45_number", newWord);
-            localStorage.setItem("wordDate", currentDate);
+            localStorage.setItem("numDate", currentDate);
+            console.log("Word is set to :")
+            console.log(newWord);
 
         }
-        
+        console.log(localStorage.getItem("45_number"))
     }
 
 
@@ -549,16 +553,17 @@ function getCurrentDate() {
     const today = new Date();
     return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 }
+
 // Other classes and methods as needed
 
 window.onload = function () {
+    // localStorage.clear();
     
-    if (!localStorage.getItem("45_number")) {
-        const initialWord = getNumber45();
-        const currentDate = getCurrentDate();
-
+    if (!localStorage.getItem("45_number") || !localStorage.getItem("numDate")) {
+        let initialWord = getNumber45();
+        let currentDate = getCurrentDate();
         localStorage.setItem("45_number", initialWord);
-        localStorage.setItem("wordDate", currentDate);
+        localStorage.setItem("numDate", currentDate);
         
     }
     
